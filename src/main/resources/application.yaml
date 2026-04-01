@@ -2,11 +2,9 @@ spring:
   application:
     name: docugap
 
-  # ── LLM Providers ──────────────────────────────────────────────────────────
-  # Only the active provider (docgap.llm.provider) needs real credentials.
-  # The inactive provider's keys can remain as placeholders.
-
   ai:
+
+    # Anthropic Claude
     anthropic:
       api-key: ${ANTHROPIC_API_KEY}
       chat:
@@ -14,6 +12,7 @@ spring:
           model: claude-sonnet-4-20250514
           max-tokens: 4000
 
+    # Azure AI Foundry
     azure:
       openai:
         api-key: ${AZURE_OPENAI_API_KEY}
@@ -22,24 +21,25 @@ spring:
           options:
             deployment-name: ${AZURE_DEPLOYMENT_NAME}
 
-    # ── MCP Client ─────────────────────────────────────────────────────────────
-    # Both MCP servers are always registered; the pipeline uses both.
-
+    # MCP client SSE connections
+    # Both servers are always registered; the pipeline uses both.
     mcp:
       client:
-        servers:
-          atlassian:
-            url: https://mcp.atlassian.com/v1/mcp
-            type: sse
-          github:
-            url: https://api.githubcopilot.com/mcp
-            type: sse
+        enabled: true
+        request-timeout: 30s
+        type: SYNC
+        sse:
+          connections:
+            atlassian:
+              url: https://mcp.atlassian.com/v1/mcp
+            github:
+              url: https://api.githubcopilot.com/mcp
 
-# ── DocuGap Pipeline ───────────────────────────────────────────────────────
+# DocuGap pipeline configuration
 docugap:
 
   llm:
-    # Switch between 'anthropic' and 'azure' — no code changes required.
+    # Switch between 'anthropic' and 'azure' with no code changes required.
     provider: anthropic
 
   pipeline:
@@ -59,7 +59,7 @@ docugap:
     session-log-page-id: "6094849"
 
   github:
-    # The repository to analyze. Override per-run via the REST API if needed.
+    # Default repository to analyze. Can be overridden per-run via the REST API.
     default-repo: ${GITHUB_DEFAULT_REPO}
 
   output:
@@ -68,20 +68,19 @@ docugap:
     # Write PipelineResult as JSON to json-path after each run.
     json: true
     json-path: ./output/
-    # Write session log entry to Confluence. Disable until pipeline is stable.
+    # Disable Confluence writes until the pipeline is stable end-to-end.
     confluence: false
 
   scheduler:
-    # Set to false to disable scheduled runs entirely.
+    # Set to false to disable scheduled runs during development.
     enabled: false
-    # Cron expression — only active when enabled: true.
-    # Example: "0 0 9 * * MON" = every Monday at 9am.
+    # Cron expression — only evaluated when enabled: true.
+    # Example: "0 0 9 * * MON" runs every Monday at 9am.
     cron: "0 0 9 * * MON"
-    # Default run parameters used by the scheduler trigger.
     default-project-key: DGAP
     default-space-key: DGAP
 
-# ── SpringDoc / Swagger UI ─────────────────────────────────────────────────
+# SpringDoc / Swagger UI
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
@@ -90,7 +89,7 @@ springdoc:
   api-docs:
     path: /api-docs
 
-# ── Actuator ───────────────────────────────────────────────────────────────
+# Actuator
 management:
   endpoints:
     web:
@@ -100,19 +99,9 @@ management:
     health:
       show-details: always
 
-# ── Logging ────────────────────────────────────────────────────────────────
+# Logging
 logging:
   level:
     root: INFO
     com.jellisisland.docugap: DEBUG
     org.springframework.ai: INFO
-
----
-## A Few Notes
-
-## Environment variables** — sensitive values use `${ENV_VAR}` so they never live in the file. You'll want a `.env` file or IDE run configuration with at minimum:
-#ANTHROPIC_API_KEY=sk-ant-
-AZURE_OPENAI_API_KEY=        # placeholder until you need it
-AZURE_OPENAI_ENDPOINT=       # placeholder
-AZURE_DEPLOYMENT_NAME=       # placeholder
-GITHUB_DEFAULT_REPO=jellisisland/yourrepo
