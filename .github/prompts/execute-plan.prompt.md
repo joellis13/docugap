@@ -9,7 +9,7 @@ description: 'Execute a saved implementation plan for a Jira story'
 Triggered by: `/execute-plan` or "execute plan <JIRA-KEY>"
 
 ```
-JIRA_KEY: {{input:jira_key:Jira issue key (e.g. SLIM-42)}}
+JIRA_KEY: {{input:jira_key:Jira issue key (e.g. DGAP-42)}}
 ```
 
 ---
@@ -68,7 +68,7 @@ Work through the paired implementation step:
     - Constructor injection — never field injection (`@Autowired` on fields)
     - Lombok (`@Data`, `@Builder`, `@RequiredArgsConstructor`, etc.) where it reduces boilerplate
     - Do not write implementation code inside test files
-- `TODO` comments that reference future work must cite a real Jira key (e.g. `// TODO SLIM-13: implement GET /devices`).
+- `TODO` comments that reference future work must cite a real Jira key (e.g. `// TODO DGAP-13: implement GET /devices`).
   Look up the backlog in Jira before using a placeholder.
 - After each file change, run `./gradlew build` and fix all compile errors before continuing.
 

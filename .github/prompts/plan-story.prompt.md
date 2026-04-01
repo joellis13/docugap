@@ -9,7 +9,7 @@ description: 'Research a Jira story and generate an implementation plan'
 Triggered by: `/plan-story` or "plan story <JIRA-KEY>"
 
 ```
-JIRA_KEY: {{input:jira_key:Jira issue key (e.g. SLIM-42)}}
+JIRA_KEY: {{input:jira_key:Jira issue key (e.g. DGAP-42)}}
 ```
 
 ---

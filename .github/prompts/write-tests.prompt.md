@@ -11,7 +11,7 @@ Triggered by: `/write-tests` or "write tests for <JIRA-KEY>"
 Run after `/plan-story`, before feature coding.
 
 ```
-JIRA_KEY: {{input:jira_key:Jira issue key (e.g. SLIM-42)}}
+JIRA_KEY: {{input:jira_key:Jira issue key (e.g. DGAP-42)}}
 ```
 
 ---

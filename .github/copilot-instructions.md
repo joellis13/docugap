@@ -3,9 +3,9 @@
 ## MCP Servers
 
 - **GitHub MCP** – branch and file operations
-    - The Repository is `joellis13/slimdroid-api` and the default branch is `main`
+    - The Repository is `joellis13/docugap` and the default branch is `main`
 - **Atlassian MCP** – Jira and Confluence
-    - The Space Key for both Jira and Confluence is `SLIM`
+    - The Space Key for both Jira and Confluence is `DGAP`
 - **Context7** - Documentation reference
 
 ## Global Rules (VERY IMPORTANT)
@@ -91,7 +91,7 @@ Plan Corrections comment to Jira — always with explicit developer permission.
 
 The `{{input:variable:hint}}` syntax in prompt files is **VS Code only**.
 In JetBrains, include the Jira key directly in your message, for example:
-> "plan story SLIM-42"
+> "plan story DGAP-42"
 
 YAML frontmatter (`mode`, `tools`, `description`) in `.prompt.md` files is
 VS Code only and is safely ignored by JetBrains.

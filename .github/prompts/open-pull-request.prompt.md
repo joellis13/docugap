@@ -9,7 +9,7 @@ description: 'Open a pull request for a completed feature branch'
 Triggered by: `/open-pull-request` or "open pull request for <JIRA-KEY>"
 
 ```
-JIRA_KEY: {{input:jira_key:Jira issue key (e.g. SLIM-42)}}
+JIRA_KEY: {{input:jira_key:Jira issue key (e.g. DGAP-42)}}
 ```
 
 ---
@@ -20,9 +20,9 @@ JIRA_KEY: {{input:jira_key:Jira issue key (e.g. SLIM-42)}}
 
 - If the developer provided a ticket ID, use it.
 - Otherwise, read the ticket ID from the current Git branch name (branch names follow the pattern
-  `SLIM-####_short-description`).
+  `DGAP-####_short-description`).
 - If you cannot determine the ticket ID, **stop and ask the developer**:
-  > "Which ticket is this PR for? Please provide the ticket ID (e.g. SLIM-42)."
+  > "Which ticket is this PR for? Please provide the ticket ID (e.g. DGAP-42)."
 - Confirm the current branch is **not** `main`. If it is, stop:
   > "You are on `main`. Please switch to the feature branch before opening a PR."
 
@@ -48,7 +48,7 @@ If the plan file does not exist, ask the developer for the story summary and Jir
 
 ### 4. Push the Branch
 
-Push the current feature branch to `joellis13/slimdroid-api`.
+Push the current feature branch to `joellis13/docugap`.
 
 ### 5. Open a Pull Request
 
@@ -63,7 +63,7 @@ Open a pull request against `main` with the following structure:
 <Brief summary of what was built and why, derived from the plan's Summary section.>
 
 ## Jira
-<Full URL to the Jira issue, e.g. https://joellis13.atlassian.net/browse/SLIM-42>
+<Full URL to the Jira issue, e.g. https://joellis13.atlassian.net/browse/DGAP-42>
 
 ## Change Log
 <Bullet list of every meaningful change. Use `git log main..<branch> --oneline` to

@@ -93,7 +93,7 @@ whichever provider is not in use.
 ### 1. Clone and build
 
 ```bash
-git clone https://github.com/joellis13/slimdroid-api.git   # or your fork
+git clone https://github.com/joellis13/docugap.git   # or your fork
 cd docugap
 ./gradlew build
 ```
