@@ -21,19 +21,20 @@ spring:
           options:
             deployment-name: ${AZURE_DEPLOYMENT_NAME}
 
-    # MCP client SSE connections
+    # MCP client streamable-HTTP connections
     # Both servers are always registered; the pipeline uses both.
     mcp:
       client:
         enabled: true
         request-timeout: 30s
         type: SYNC
-        sse:
-          connections:
-            atlassian:
-              url: https://mcp.atlassian.com/v1/mcp
-            github:
-              url: https://api.githubcopilot.com/mcp
+        streamable:
+          http:
+            connections:
+              atlassian:
+                url: https://mcp.atlassian.com/v1/mcp
+              github:
+                url: https://api.githubcopilot.com/mcp
 
 # DocuGap pipeline configuration
 docugap:
