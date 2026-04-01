@@ -1,0 +1,118 @@
+spring:
+  application:
+    name: docugap
+
+  # ── LLM Providers ──────────────────────────────────────────────────────────
+  # Only the active provider (docgap.llm.provider) needs real credentials.
+  # The inactive provider's keys can remain as placeholders.
+
+  ai:
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY}
+      chat:
+        options:
+          model: claude-sonnet-4-20250514
+          max-tokens: 4000
+
+    azure:
+      openai:
+        api-key: ${AZURE_OPENAI_API_KEY}
+        endpoint: ${AZURE_OPENAI_ENDPOINT}
+        chat:
+          options:
+            deployment-name: ${AZURE_DEPLOYMENT_NAME}
+
+    # ── MCP Client ─────────────────────────────────────────────────────────────
+    # Both MCP servers are always registered; the pipeline uses both.
+
+    mcp:
+      client:
+        servers:
+          atlassian:
+            url: https://mcp.atlassian.com/v1/mcp
+            type: sse
+          github:
+            url: https://api.githubcopilot.com/mcp
+            type: sse
+
+# ── DocuGap Pipeline ───────────────────────────────────────────────────────
+docugap:
+
+  llm:
+    # Switch between 'anthropic' and 'azure' — no code changes required.
+    provider: anthropic
+
+  pipeline:
+    # Maximum number of epics to analyze in a single run.
+    max-epics-per-run: 10
+    # Epics closed more than this many days ago are skipped.
+    epic-lookback-days: 180
+    # When true, pipeline pauses after Phase 5 and waits for POST /gaps/approve.
+    # Set to false to auto-approve all candidates (not recommended in production).
+    pause-for-approval: true
+
+  atlassian:
+    cloud-id: d6b5b659-1fa8-4883-a30f-e038eec6359d
+    jira-project-key: DGAP
+    confluence-space-key: DGAP
+    # Page ID of the Gap Analysis Session Log page in Confluence.
+    session-log-page-id: "6094849"
+
+  github:
+    # The repository to analyze. Override per-run via the REST API if needed.
+    default-repo: ${GITHUB_DEFAULT_REPO}
+
+  output:
+    # Console output — always on during development.
+    console: true
+    # Write PipelineResult as JSON to json-path after each run.
+    json: true
+    json-path: ./output/
+    # Write session log entry to Confluence. Disable until pipeline is stable.
+    confluence: false
+
+  scheduler:
+    # Set to false to disable scheduled runs entirely.
+    enabled: false
+    # Cron expression — only active when enabled: true.
+    # Example: "0 0 9 * * MON" = every Monday at 9am.
+    cron: "0 0 9 * * MON"
+    # Default run parameters used by the scheduler trigger.
+    default-project-key: DGAP
+    default-space-key: DGAP
+
+# ── SpringDoc / Swagger UI ─────────────────────────────────────────────────
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /api-docs
+
+# ── Actuator ───────────────────────────────────────────────────────────────
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+# ── Logging ────────────────────────────────────────────────────────────────
+logging:
+  level:
+    root: INFO
+    com.jellisisland.docugap: DEBUG
+    org.springframework.ai: INFO
+
+---
+## A Few Notes
+
+## Environment variables** — sensitive values use `${ENV_VAR}` so they never live in the file. You'll want a `.env` file or IDE run configuration with at minimum:
+#ANTHROPIC_API_KEY=sk-ant-
+AZURE_OPENAI_API_KEY=        # placeholder until you need it
+AZURE_OPENAI_ENDPOINT=       # placeholder
+AZURE_DEPLOYMENT_NAME=       # placeholder
+GITHUB_DEFAULT_REPO=jellisisland/yourrepo
