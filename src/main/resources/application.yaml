@@ -6,7 +6,7 @@ spring:
 
     # Anthropic Claude
     anthropic:
-      api-key: ${ANTHROPIC_API_KEY}
+      api-key: ${ANTHROPIC_API_KEY:FAKE_KEY}
       chat:
         options:
           model: claude-sonnet-4-20250514
@@ -15,7 +15,7 @@ spring:
     # Azure AI Foundry
     azure:
       openai:
-        api-key: ${AZURE_OPENAI_API_KEY}
+        api-key: ${AZURE_OPENAI_API_KEY:FAKE_KEY}
         endpoint: ${AZURE_OPENAI_ENDPOINT}
         chat:
           options:
