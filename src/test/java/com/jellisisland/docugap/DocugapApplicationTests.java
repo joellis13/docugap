@@ -19,6 +19,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ActiveProfiles("test")
 class DocugapApplicationTests {
 
+    private static boolean containsInCauseChain(Throwable ex, String text) {
+        for (Throwable t = ex; t != null; t = t.getCause()) {
+            if (t.getMessage() != null && t.getMessage().contains(text)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Runs the application without the test profile so the main application.yaml
      * placeholder {@code ${ANTHROPIC_API_KEY}} is in play. All other required
@@ -55,14 +64,30 @@ class DocugapApplicationTests {
                     "Expected exception to reference spring.ai.anthropic.api-key or ANTHROPIC_API_KEY, but was: "
                             + ex.getMessage());
         }
+    }
 
-        private static boolean containsInCauseChain(Throwable ex, String text) {
-            for (Throwable t = ex; t != null; t = t.getCause()) {
-                if (t.getMessage() != null && t.getMessage().contains(text)) {
-                    return true;
-                }
-            }
-            return false;
+    @Nested
+    class UnsupportedProviderTests {
+
+        @Test
+        void testApplicationFailsWithUnsupportedProvider() {
+            Exception ex = assertThrows(Exception.class, () -> {
+                SpringApplication app = new SpringApplication(DocugapApplication.class);
+                app.addInitializers((ConfigurableApplicationContext ctx) -> {
+                    ConfigurableEnvironment env = ctx.getEnvironment();
+                    Map<String, Object> overrides = new HashMap<>();
+                    overrides.put("spring.ai.mcp.client.enabled", "false");
+                    overrides.put("spring.ai.anthropic.api-key", "stub");
+                    overrides.put("docugap.llm.provider", "unsupported-provider");
+                    overrides.put("server.port", "0");
+                    env.getPropertySources().addFirst(new MapPropertySource("unsupportedProviderOverrides", overrides));
+                });
+                app.run();
+            });
+            assertTrue(
+                    containsInCauseChain(ex, "unsupported-provider") ||
+                    containsInCauseChain(ex, "Unsupported LLM provider"),
+                    "Expected exception to reference unsupported provider value, but was: " + ex.getMessage());
         }
     }
 }

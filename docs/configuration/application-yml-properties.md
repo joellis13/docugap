@@ -17,28 +17,28 @@ All DocuGap-specific properties are bound to `DocUGapProperties` (prefix `docuga
 
 | Property                              | Type    | Default | Required | Description                                                               |
 |---------------------------------------|---------|---------|----------|---------------------------------------------------------------------------|
-| `docugap.pipeline.max-epics-per-run`  | int     | —       | Yes      | Maximum number of epics analyzed in a single pipeline run.                |
-| `docugap.pipeline.epic-lookback-days` | int     | —       | Yes      | Epics closed more than this many days ago are skipped.                    |
+| `docugap.pipeline.max-epics-per-run`  | int     | `0`     | No       | Maximum number of epics analyzed in a single pipeline run.                |
+| `docugap.pipeline.epic-lookback-days` | int     | `0`     | No       | Epics closed more than this many days ago are skipped.                    |
 | `docugap.pipeline.pause-for-approval` | boolean | `false` | No       | When `true`, pipeline pauses after Phase 5 awaiting POST `/gaps/approve`. |
 
 ---
 
 ## `docugap.atlassian`
 
-| Property                                    | Type   | Default | Required | Description                                              |
-|---------------------------------------------|--------|---------|----------|----------------------------------------------------------|
-| `docugap.atlassian.cloud-id`                | String | —       | Yes      | Atlassian Cloud ID (UUID).                               |
-| `docugap.atlassian.jira-project-key`        | String | —       | Yes      | Jira project key (e.g. `DGAP`).                          |
-| `docugap.atlassian.confluence-space-key`    | String | —       | Yes      | Confluence space key (e.g. `DGAP`).                      |
-| `docugap.atlassian.session-log-page-id`     | String | —       | Yes      | Confluence page ID for the Gap Analysis Session Log.     |
+| Property                                 | Type   | Default | Required | Description                                                              |
+|------------------------------------------|--------|---------|----------|--------------------------------------------------------------------------|
+| `docugap.atlassian.cloud-id`             | String | —       | No       | Atlassian Cloud ID (UUID). Defaults to `null` if not set.                |
+| `docugap.atlassian.jira-project-key`     | String | —       | No       | Jira project key (e.g. `DGAP`). Defaults to `null` if not set.           |
+| `docugap.atlassian.confluence-space-key` | String | —       | No       | Confluence space key (e.g. `DGAP`). Defaults to `null` if not set.       |
+| `docugap.atlassian.session-log-page-id`  | String | —       | No       | Confluence page ID for the Gap Analysis Session Log. Defaults to `null`. |
 
 ---
 
 ## `docugap.github`
 
-| Property                      | Type   | Default | Required | Description                                                                                  |
-|-------------------------------|--------|---------|----------|----------------------------------------------------------------------------------------------|
-| `docugap.github.default-repo` | String | —       | Yes      | Default repository to analyze in `owner/repo` format. Sourced from `${GITHUB_DEFAULT_REPO}`. |
+| Property                      | Type   | Default | Required | Description                                                                                                                 |
+|-------------------------------|--------|---------|----------|-----------------------------------------------------------------------------------------------------------------------------|
+| `docugap.github.default-repo` | String | —       | No       | Default repository to analyze in `owner/repo` format. Sourced from `${GITHUB_DEFAULT_REPO}`. Defaults to `null` if not set. |
 
 ---
 

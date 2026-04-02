@@ -43,6 +43,9 @@ public class AiProviderConfiguration {
                     "LLM provider is 'azure' but spring.ai.azure.openai.chat.options.deployment-name is not configured. " +
                     "Set the appropriate Azure OpenAI deployment name property.");
             }
+        } else {
+            throw new IllegalStateException(
+                "Unsupported LLM provider: '" + provider + "'. Supported values are: anthropic, azure.");
         }
     }
 }
