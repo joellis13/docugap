@@ -14,19 +14,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ConfigurationPropertiesTests {
 
     @Autowired
-    private DocUGapProperties docUGapProperties;
+    private DocugapProperties docugapProperties;
 
     @Autowired
     private SchedulerProperties schedulerProperties;
 
     @Test
-    void testLlmProviderDefaultsToAnthropic() {
-        assertEquals("anthropic", docUGapProperties.getLlm().getProvider());
+    void testLlmProviderConfiguredToAnthropic() {
+        assertEquals("anthropic", docugapProperties.getLlm().getProvider());
     }
 
     @Test
     void testPipelinePropertiesLoaded() {
-        DocUGapProperties.PipelineProperties pipeline = docUGapProperties.getPipeline();
+        DocugapProperties.PipelineProperties pipeline = docugapProperties.getPipeline();
         assertEquals(5, pipeline.getMaxEpicsPerRun());
         assertEquals(90, pipeline.getEpicLookbackDays());
         assertFalse(pipeline.isPauseForApproval());
@@ -34,7 +34,7 @@ class ConfigurationPropertiesTests {
 
     @Test
     void testAtlassianPropertiesLoaded() {
-        DocUGapProperties.AtlassianProperties atlassian = docUGapProperties.getAtlassian();
+        DocugapProperties.AtlassianProperties atlassian = docugapProperties.getAtlassian();
         assertEquals("test-cloud-id", atlassian.getCloudId());
         assertEquals("TEST", atlassian.getJiraProjectKey());
         assertEquals("TEST", atlassian.getConfluenceSpaceKey());
@@ -43,12 +43,12 @@ class ConfigurationPropertiesTests {
 
     @Test
     void testGitHubPropertiesLoaded() {
-        assertEquals("test-owner/test-repo", docUGapProperties.getGithub().getDefaultRepo());
+        assertEquals("test-owner/test-repo", docugapProperties.getGithub().getDefaultRepo());
     }
 
     @Test
     void testOutputPropertiesLoaded() {
-        DocUGapProperties.OutputProperties output = docUGapProperties.getOutput();
+        DocugapProperties.OutputProperties output = docugapProperties.getOutput();
         assertTrue(output.isConsole());
         assertFalse(output.isJson());
         assertEquals("./test-output/", output.getJsonPath());

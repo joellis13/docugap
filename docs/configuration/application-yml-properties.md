@@ -1,6 +1,6 @@
 # Application YAML Properties Reference
 
-All DocuGap-specific properties are bound to `DocUGapProperties` (prefix `docugap`) and
+All DocuGap-specific properties are bound to `DocugapProperties` (prefix `docugap`) and
 `SchedulerProperties` (prefix `docugap.scheduler`).
 
 ---
@@ -17,9 +17,9 @@ All DocuGap-specific properties are bound to `DocUGapProperties` (prefix `docuga
 
 | Property                              | Type    | Default | Required | Description                                                               |
 |---------------------------------------|---------|---------|----------|---------------------------------------------------------------------------|
-| `docugap.pipeline.max-epics-per-run`  | int     | `0`     | No       | Maximum number of epics analyzed in a single pipeline run.                |
-| `docugap.pipeline.epic-lookback-days` | int     | `0`     | No       | Epics closed more than this many days ago are skipped.                    |
-| `docugap.pipeline.pause-for-approval` | boolean | `false` | No       | When `true`, pipeline pauses after Phase 5 awaiting POST `/gaps/approve`. |
+| `docugap.pipeline.max-epics-per-run`  | int     | `10`    | No       | Maximum number of epics analyzed in a single pipeline run.                |
+| `docugap.pipeline.epic-lookback-days` | int     | `180`   | No       | Epics closed more than this many days ago are skipped.                    |
+| `docugap.pipeline.pause-for-approval` | boolean | `true`  | No       | When `true`, pipeline pauses after Phase 5 awaiting POST `/gaps/approve`. |
 
 ---
 
@@ -36,20 +36,20 @@ All DocuGap-specific properties are bound to `DocUGapProperties` (prefix `docuga
 
 ## `docugap.github`
 
-| Property                      | Type   | Default | Required | Description                                                                                                                 |
-|-------------------------------|--------|---------|----------|-----------------------------------------------------------------------------------------------------------------------------|
-| `docugap.github.default-repo` | String | —       | No       | Default repository to analyze in `owner/repo` format. Sourced from `${GITHUB_DEFAULT_REPO}`. Defaults to `null` if not set. |
+| Property                      | Type   | Default | Required | Description                                                                                                                     |
+|-------------------------------|--------|---------|----------|---------------------------------------------------------------------------------------------------------------------------------|
+| `docugap.github.default-repo` | String | `""`    | No       | Default repository to analyze in `owner/repo` format. Sourced from `${GITHUB_DEFAULT_REPO}`. Defaults to empty string if unset. |
 
 ---
 
 ## `docugap.output`
 
-| Property                     | Type    | Default | Required | Description                                                       |
-|------------------------------|---------|---------|----------|-------------------------------------------------------------------|
-| `docugap.output.console`     | boolean | `true`  | No       | When `true`, pipeline results are printed to stdout.              |
-| `docugap.output.json`        | boolean | `false` | No       | When `true`, pipeline results are written as JSON to `json-path`. |
-| `docugap.output.json-path`   | String  | —       | No       | Directory path for JSON output files (e.g. `./output/`).          |
-| `docugap.output.confluence`  | boolean | `false` | No       | When `true`, results are written to Confluence.                   |
+| Property                    | Type    | Default     | Required | Description                                                       |
+|-----------------------------|---------|-------------|----------|-------------------------------------------------------------------|
+| `docugap.output.console`    | boolean | `true`      | No       | When `true`, pipeline results are printed to stdout.              |
+| `docugap.output.json`       | boolean | `true`      | No       | When `true`, pipeline results are written as JSON to `json-path`. |
+| `docugap.output.json-path`  | String  | `./output/` | No       | Directory path for JSON output files.                             |
+| `docugap.output.confluence` | boolean | `false`     | No       | When `true`, results are written to Confluence.                   |
 
 ---
 

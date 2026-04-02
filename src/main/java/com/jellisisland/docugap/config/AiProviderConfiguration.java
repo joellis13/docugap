@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AiProviderConfiguration {
 
-    private final DocUGapProperties docUGapProperties;
+    private final DocugapProperties docugapProperties;
     private final Environment environment;
 
     @PostConstruct
     public void validateProviderCredentials() {
-        String provider = docUGapProperties.getLlm().getProvider();
+        String provider = docugapProperties.getLlm().getProvider();
         if ("anthropic".equalsIgnoreCase(provider)) {
             String apiKey = environment.getProperty("spring.ai.anthropic.api-key", "");
             if (StringUtils.isBlank(apiKey)) {
