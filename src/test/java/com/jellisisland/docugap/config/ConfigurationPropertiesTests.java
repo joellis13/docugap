@@ -14,19 +14,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ConfigurationPropertiesTests {
 
     @Autowired
-    private DocGapProperties docGapProperties;
+    private DocUGapProperties docUGapProperties;
 
     @Autowired
     private SchedulerProperties schedulerProperties;
 
     @Test
     void testLlmProviderDefaultsToAnthropic() {
-        assertEquals("anthropic", docGapProperties.getLlm().getProvider());
+        assertEquals("anthropic", docUGapProperties.getLlm().getProvider());
     }
 
     @Test
     void testPipelinePropertiesLoaded() {
-        DocGapProperties.PipelineProperties pipeline = docGapProperties.getPipeline();
+        DocUGapProperties.PipelineProperties pipeline = docUGapProperties.getPipeline();
         assertEquals(5, pipeline.getMaxEpicsPerRun());
         assertEquals(90, pipeline.getEpicLookbackDays());
         assertFalse(pipeline.isPauseForApproval());
@@ -34,7 +34,7 @@ class ConfigurationPropertiesTests {
 
     @Test
     void testAtlassianPropertiesLoaded() {
-        DocGapProperties.AtlassianProperties atlassian = docGapProperties.getAtlassian();
+        DocUGapProperties.AtlassianProperties atlassian = docUGapProperties.getAtlassian();
         assertEquals("test-cloud-id", atlassian.getCloudId());
         assertEquals("TEST", atlassian.getJiraProjectKey());
         assertEquals("TEST", atlassian.getConfluenceSpaceKey());
@@ -43,12 +43,12 @@ class ConfigurationPropertiesTests {
 
     @Test
     void testGitHubPropertiesLoaded() {
-        assertEquals("test-owner/test-repo", docGapProperties.getGithub().getDefaultRepo());
+        assertEquals("test-owner/test-repo", docUGapProperties.getGithub().getDefaultRepo());
     }
 
     @Test
     void testOutputPropertiesLoaded() {
-        DocGapProperties.OutputProperties output = docGapProperties.getOutput();
+        DocUGapProperties.OutputProperties output = docUGapProperties.getOutput();
         assertTrue(output.isConsole());
         assertFalse(output.isJson());
         assertEquals("./test-output/", output.getJsonPath());

@@ -1,6 +1,6 @@
 # Application YAML Properties Reference
 
-All DocuGap-specific properties are bound to `DocGapProperties` (prefix `docugap`) and
+All DocuGap-specific properties are bound to `DocUGapProperties` (prefix `docugap`) and
 `SchedulerProperties` (prefix `docugap.scheduler`).
 
 ---

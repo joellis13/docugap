@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
 @ConfigurationProperties(prefix = "docugap")
-public class DocGapProperties {
+public class DocUGapProperties {
 
     private LlmProperties llm = new LlmProperties();
     private PipelineProperties pipeline = new PipelineProperties();
