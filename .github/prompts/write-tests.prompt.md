@@ -59,6 +59,19 @@ Write all test cases as compilable Java. Tests must:
 - Use `@Test`, `@ExtendWith`, `@SpringBootTest` etc. as appropriate
 - Mock external dependencies with Mockito; avoid over-mocking internals
 - Be self-contained — no shared mutable state between tests
+- For boolean assertions, use `assertTrue()`/`assertFalse()` (JUnit 5); use AssertJ only for richer
+  assertions (equality, string content, collection contents, etc.)
+- For equality, use `assertEquals(expected, actual)` — not `assertThat(actual).isEqualTo(expected)`.
+  For thrown exceptions, use `assertThrows(Type.class, executable)` — not `assertThatThrownBy`.
+  Avoid AssertJ entirely unless Jupiter has no clean equivalent.
+- Always include a failure message on `assertTrue`/`assertFalse` so the actual value is visible on
+  failure (e.g. `assertTrue(condition, "Expected X but got: " + actual)`).
+- `TestRestTemplate` in `@SpringBootTest` integration tests does **not** follow redirects by default.
+  Do **not** widen assertions to accept 3xx — control the test instead:
+  - To verify a redirect target (e.g. Swagger UI HTML), test the target URL directly
+    (e.g. `/swagger-ui/index.html`) and assert `HttpStatus.OK`.
+  - To test through a redirect entry point, configure `TestRestTemplate` with
+    `HttpClientOption.FOLLOW_REDIRECTS` for that specific test.
 
 Place files following the convention inferred in Step 2.
 

@@ -65,7 +65,7 @@ Work through the paired implementation step:
     - SOLID and DRY principles
     - Descriptive names for variables, methods, and classes
     - Standard Spring Boot package structure: `controller`, `service`, `model`, `config`, `exception`
-    - Constructor injection — never field injection (`@Autowired` on fields)
+    - Constructor injection via `@RequiredArgsConstructor` with `private final` fields — never field injection (`@Autowired` on fields) or explicit constructors unless logic is required
     - Lombok (`@Data`, `@Builder`, `@RequiredArgsConstructor`, etc.) where it reduces boilerplate
     - Do not write implementation code inside test files
 - `TODO` comments that reference future work must cite a real Jira key (e.g. `// TODO DGAP-13: implement GET /devices`).
@@ -80,6 +80,11 @@ Run the same test class again:
 ```
 Every test must **pass**. Fix all failures before advancing. Do not move to the next
 pair while any test in this pair is still red.
+
+If any test fails for a reason other than missing implementation (compilation error,
+assertion mismatch, unexpected framework behavior), **stop immediately**. Report the
+failing test, the actual vs. expected values, and your diagnosis to the developer.
+Do not autonomously change a test assertion — wait for explicit instruction.
 
 #### Stage D — Commit the pair
 

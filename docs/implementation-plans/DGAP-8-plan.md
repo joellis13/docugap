@@ -1,5 +1,7 @@
 # DGAP-8 Implementation Plan
 
+**Status:** REVIEWED
+
 ## Acceptance Criteria
 
 | ID   | Criterion                                                                                                              |
@@ -92,8 +94,6 @@ environment property. This prevents the failing context from interfering with th
 | Test Case                                         | Inputs                                           | Expected Outcome                                   |
 |---------------------------------------------------|--------------------------------------------------|----------------------------------------------------|
 | `testApplicationStartsWithValidConfiguration`     | All env vars set (mock MCP servers not required) | Application context loads successfully             |
-| `testSwaggerUIEndpointAccessible`                 | Application started                              | Swagger UI accessible at `/swagger-ui.html`        |
-| `testActuatorHealthEndpointAccessible`            | Application started                              | Health endpoint returns UP status                  |
 | `testApplicationFailsWithMissingCriticalProperty` | Omit `ANTHROPIC_API_KEY` env var                 | Application context fails to load with clear error |
 
 ### Step 5: Create Configuration Documentation (Optional but Recommended)

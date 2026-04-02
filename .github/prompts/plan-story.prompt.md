@@ -95,6 +95,11 @@ If score < 8.5 after 4 passes, prepend:
    > "To write tests before coding, run `/write-tests`. To go straight to
    > implementation, run `/execute-plan`."
 
+**Documentation note:** If the story produces user-visible reference documentation
+(property tables, API guides, ADRs), the plan's documentation step should specify
+creating it in **both** `docs/` (versioned with code) and Confluence (`DGAP` space,
+via the Atlassian MCP tool). Do not put it only in `docs/`.
+
 ---
 
 ## Rules

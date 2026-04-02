@@ -43,11 +43,45 @@
 - Do not create interface/impl pairs unless there are multiple implementations or the interface is required for
   testing — prefer a single concrete class
 - All code, including Markdown, should be formatted according to IDE defaults
+- On Spring components and `@Configuration` classes, always use `@RequiredArgsConstructor` with `private final`
+  fields — never write explicit constructor bodies unless the constructor contains logic beyond field assignment
 
 ## Testing Style and Requirements
 
 - Anytime feature code or tests are updated (like when addressing PR feedback), run any impacted or related tests and
   fix any errors before moving on.
+- Prefer JUnit 5 (`org.junit.jupiter.api.Assertions`) over AssertJ (`assertThat`) whenever Jupiter
+  has an equivalent assertion. Use AssertJ only for assertions Jupiter cannot express concisely
+  (e.g. collection contents, complex string matching):
+
+  | Situation        | ✅ Prefer                               | ❌ Avoid                                    |
+    |------------------|----------------------------------------|--------------------------------------------|
+  | Equality         | `assertEquals(expected, actual)`       | `assertThat(actual).isEqualTo(expected)`   |
+  | Boolean true     | `assertTrue(condition)`                | `assertThat(condition).isTrue()`           |
+  | Boolean false    | `assertFalse(condition)`               | `assertThat(condition).isFalse()`          |
+  | Exception thrown | `assertThrows(Type.class, executable)` | `assertThatThrownBy(...).isInstanceOf(..)` |
+  | String contains  | `assertTrue(s.contains(x), "message")` | `assertThat(s).contains(x)`                |
+
+- Always include a failure message on `assertTrue`/`assertFalse` calls so the actual value appears
+  when the assertion fails.
+- `TestRestTemplate` (used in `@SpringBootTest` integration tests) does **not** follow HTTP redirects by
+  default. Do **not** widen assertions to accept 3xx — control the test instead:
+    - If the endpoint you want to verify is the redirect target (e.g. the Swagger UI HTML page), test
+      the target URL directly (e.g. `/swagger-ui/index.html`) and assert `HttpStatus.OK`.
+    - If you must test through the redirect entry point, configure `TestRestTemplate` with
+      `HttpClientOption.FOLLOW_REDIRECTS` for that specific test.
+
+## Documentation Placement
+
+| Document type                               | Location                             |
+|---------------------------------------------|--------------------------------------|
+| Implementation plans                        | `docs/implementation-plans/` (local) |
+| Developer quick-reference (e.g. config ref) | `docs/` (versioned with code)        |
+| Team-facing / living documentation          | Confluence (`DGAP` space)            |
+
+When a story produces user-visible reference documentation (property tables, API guides, ADRs), create it in
+**both** `docs/` and Confluence — the `docs/` copy stays in sync with the code, and the Confluence page is
+discoverable by the wider team.
 
 ## Prompts
 
@@ -98,7 +132,7 @@ VS Code only and is safely ignored by JetBrains.
 
 ## Terminal Usage
 
-- **Prefer tools over terminal commands** — use MCP/IDE tools (file reads, GitHub MCP, Atlassian MCP, etc.) instead of
+- **Prefer tools to terminal commands** — use MCP/IDE tools (file reads, GitHub MCP, Atlassian MCP, etc.) instead of
   shell commands whenever a tool can do the same job.
 - **Always truncate verbose output** — pipe to `| tail -N` (prefer `tail -20` unless more is needed) or `| head -N` on
   any command that may produce long output (build logs, test output, `git log`, `git diff`, `git status`, etc.).
