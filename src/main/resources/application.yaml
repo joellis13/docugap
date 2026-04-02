@@ -6,7 +6,7 @@ spring:
 
     # Anthropic Claude
     anthropic:
-      api-key: ${ANTHROPIC_API_KEY}
+      api-key: ${ANTHROPIC_API_KEY:FAKE_KEY}
       chat:
         options:
           model: claude-sonnet-4-20250514
@@ -15,11 +15,11 @@ spring:
     # Azure AI Foundry
     azure:
       openai:
-        api-key: ${AZURE_OPENAI_API_KEY}
-        endpoint: ${AZURE_OPENAI_ENDPOINT}
+        api-key: ${AZURE_OPENAI_API_KEY:FAKE_KEY}
+        endpoint: ${AZURE_OPENAI_ENDPOINT:}
         chat:
           options:
-            deployment-name: ${AZURE_DEPLOYMENT_NAME}
+            deployment-name: ${AZURE_DEPLOYMENT_NAME:}
 
     # MCP client streamable-HTTP connections
     # Both servers are always registered; the pipeline uses both.
@@ -61,7 +61,7 @@ docugap:
 
   github:
     # Default repository to analyze. Can be overridden per-run via the REST API.
-    default-repo: ${GITHUB_DEFAULT_REPO}
+    default-repo: ${GITHUB_DEFAULT_REPO:}
 
   output:
     # Console output — always on during development.

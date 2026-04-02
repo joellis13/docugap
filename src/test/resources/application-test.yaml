@@ -1,0 +1,38 @@
+spring:
+  ai:
+    anthropic:
+      api-key: test-anthropic-key
+    azure:
+      openai:
+        api-key: test-azure-key
+        endpoint: https://test.openai.azure.com
+        chat:
+          options:
+            deployment-name: test-deployment
+    mcp:
+      client:
+        enabled: false
+
+docugap:
+  pipeline:
+    max-epics-per-run: 5
+    epic-lookback-days: 90
+    pause-for-approval: false
+  atlassian:
+    cloud-id: test-cloud-id
+    jira-project-key: TEST
+    confluence-space-key: TEST
+    session-log-page-id: "12345"
+  github:
+    default-repo: test-owner/test-repo
+  output:
+    console: true
+    json: false
+    json-path: ./test-output/
+    confluence: false
+  scheduler:
+    enabled: false
+    cron: "0 0 9 * * MON"
+    default-project-key: TEST
+    default-space-key: TEST
+

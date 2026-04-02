@@ -11,7 +11,7 @@ Triggered by: `/update-plan` or "update plan <JIRA-KEY>"
 Use this whenever a decision, requirement change, or correction affects an implementation plan that has already been posted.
 
 ```
-JIRA_KEY: {{input:jira_key:Jira issue key (e.g. SLIM-42)}}
+JIRA_KEY: {{input:jira_key:Jira issue key (e.g. DGAP-42)}}
 ```
 
 ---
@@ -66,7 +66,7 @@ Add a comment to `{{JIRA_KEY}}` with the heading `## Plan Corrections — {{JIRA
 
 ### 6. Check Whether Confluence Needs Updating
 
-Search the `SLIM` Confluence space for pages that reference `{{JIRA_KEY}}` or cover the same subject area as the changed sections (e.g. Architecture, API reference, Research, POC findings, Setup & dev environment).
+Search the `DGAP` Confluence space for pages that reference `{{JIRA_KEY}}` or cover the same subject area as the changed sections (e.g. Architecture, API reference, Research, POC findings, Setup & dev environment).
 
 For each relevant page found, decide:
 
