@@ -55,7 +55,7 @@
   (e.g. collection contents, complex string matching):
 
   | Situation        | ✅ Prefer                               | ❌ Avoid                                    |
-    |------------------|----------------------------------------|--------------------------------------------|
+  |------------------|----------------------------------------|--------------------------------------------|
   | Equality         | `assertEquals(expected, actual)`       | `assertThat(actual).isEqualTo(expected)`   |
   | Boolean true     | `assertTrue(condition)`                | `assertThat(condition).isTrue()`           |
   | Boolean false    | `assertFalse(condition)`               | `assertThat(condition).isFalse()`          |
